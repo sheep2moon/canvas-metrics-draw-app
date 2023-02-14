@@ -39,6 +39,10 @@ const EffectCanvas = ({ canvasWidth, canvasHeight }: EffectCanvasProps) => {
         }
     };
 
+    const handleMouseLeave = () => {
+        setHoverPoint({ x: null, y: null });
+    };
+
     const draw = () => {
         const canvas = canvasRef?.current;
         if (canvas) {
@@ -61,7 +65,7 @@ const EffectCanvas = ({ canvasWidth, canvasHeight }: EffectCanvasProps) => {
         draw();
     }, [hoverPoint, currentElement, canvasWidth, canvasHeight]);
 
-    return <canvas className="z-10" onMouseUp={handleMouseUp} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} ref={canvasRef} />;
+    return <canvas className="z-10" onMouseUp={handleMouseUp} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} ref={canvasRef} />;
 };
 
 export default EffectCanvas;

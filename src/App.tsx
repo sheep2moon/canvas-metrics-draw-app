@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
+import Actionbar from "./components/actionbar/Actionbar";
 import Canvas from "./components/Canvas";
 import EffectCanvas from "./components/EffectCanvas";
-import Toolbar from "./components/toolbar";
+import Toolbar from "./components/toolbar/Toolbar";
 
 function App() {
     let resizeTimeout: ReturnType<typeof setTimeout>;
@@ -18,6 +18,7 @@ function App() {
             <Canvas canvasWidth={canvasSize.width} canvasHeight={canvasSize.height} />
             <EffectCanvas canvasWidth={canvasSize.width} canvasHeight={canvasSize.height} />
             <Toolbar />
+            <Actionbar />
         </div>
     );
 }

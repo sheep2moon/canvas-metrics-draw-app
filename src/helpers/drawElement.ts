@@ -5,6 +5,7 @@ export const drawElement = (context: CanvasRenderingContext2D, element: CanvasEl
         context.moveTo(element.startPosition.x, element.startPosition.y);
         context.lineTo(element.endPosition.x, element.endPosition.y);
     } else if (element.type === "rectangle") {
+        context.lineWidth = 3;
         const width = element.endPosition.x - element.startPosition.x;
         const height = element.endPosition.y - element.startPosition.y;
         context.rect(element.startPosition.x, element.startPosition.y, width, height);
