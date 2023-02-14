@@ -1,7 +1,6 @@
-import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { drawElement } from "../helpers/drawElement";
-import { toSnappedCoords } from "../helpers/snapToGrid";
-import { useAppStore } from "../zustand/appStore";
+import { useCanvasStore } from "../zustand/canvasStore";
 
 const GRID_H = 16;
 const GRID_V = 16;
@@ -13,7 +12,7 @@ type CanvasProps = {
 
 const Canvas = ({ canvasWidth, canvasHeight }: CanvasProps) => {
     const canvasRef = useRef<null | HTMLCanvasElement>(null);
-    const { elements, addElement } = useAppStore(store => store);
+    const { elements, addElement } = useCanvasStore(store => store);
 
     const drawGrid = (ctx: CanvasRenderingContext2D) => {
         const h_lines = Math.floor(window.innerWidth / GRID_H);

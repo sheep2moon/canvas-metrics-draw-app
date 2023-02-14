@@ -1,14 +1,14 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { ToolItem } from "./Toolbar";
-import { useAppStore } from "../../zustand/appStore";
 import RoundedButton from "../common/RoundedButton";
+import { useCanvasStore } from "../../zustand/canvasStore";
 
 type ToolButtonProps = ToolItem;
 
 const ToolButton = ({ id, tooltip, icon }: ToolButtonProps) => {
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-    const { selectedTool, selectTool } = useAppStore(store => store);
+    const { selectedTool, selectTool } = useCanvasStore(store => store);
 
     useEffect(() => {
         console.log(selectedTool, id);

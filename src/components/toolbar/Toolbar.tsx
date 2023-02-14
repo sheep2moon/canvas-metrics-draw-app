@@ -1,7 +1,6 @@
 import React from "react";
 import { AiOutlineLine } from "react-icons/ai";
 import { BiRectangle, BiPencil } from "react-icons/bi";
-import { useAppStore } from "../../zustand/appStore";
 import ToolButton from "./ToolButton";
 
 export type ToolItem = {
