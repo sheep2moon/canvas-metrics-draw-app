@@ -4,11 +4,12 @@ import React, { useState } from "react";
 type TooltipProps = {
     direction: "left" | "right" | "top" | "down";
     delay?: number;
+    disabled?: boolean;
     content: string | React.ReactNode;
     children: React.ReactNode;
 };
 
-const Tooltip: React.FC<TooltipProps> = ({ content, direction, delay = 500, children }) => {
+const Tooltip: React.FC<TooltipProps> = ({ content, direction, disabled = false, delay = 500, children }) => {
     const [active, setActive] = useState<boolean>(false);
     let delayTimer: ReturnType<typeof setTimeout>;
 
@@ -24,7 +25,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, direction, delay = 500, chil
 
     return (
         <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            {active && (
+            {active && !disabled && (
                 <div
                     className={clsx("absolute font-semibold text-base p-2 rounded-sm whitespace-nowrap bg-slate-100 shadow-sm shadow-stone-500", {
                         "top-full translate-y-2": direction === "down",

@@ -11,11 +11,11 @@ type CanvasProps = {
 const Canvas = ({ canvasWidth, canvasHeight }: CanvasProps) => {
     const canvasRef = useRef<null | HTMLCanvasElement>(null);
     const { elements, addElement } = useCanvasStore(store => store);
-    const gridSize = useOptionsStore(store => store.gridSize);
+    const { gridSize, scale } = useOptionsStore(store => store);
 
     const drawGrid = (ctx: CanvasRenderingContext2D) => {
-        const h_lines = Math.floor(window.innerWidth / gridSize);
-        const v_lines = Math.floor(window.innerHeight / gridSize);
+        const h_lines = Math.ceil(window.innerWidth / gridSize);
+        const v_lines = Math.ceil(window.innerHeight / gridSize);
         ctx.strokeStyle = "#777";
         for (let x = 0; x < h_lines; x++) {
             ctx.moveTo(x * gridSize, 0);
@@ -42,7 +42,7 @@ const Canvas = ({ canvasWidth, canvasHeight }: CanvasProps) => {
                 console.log(elements);
 
                 elements.forEach(element => {
-                    drawElement(context, element);
+                    drawElement(context, element, gridSize, scale);
                 });
             }
         }
@@ -55,7 +55,7 @@ const Canvas = ({ canvasWidth, canvasHeight }: CanvasProps) => {
     // On window resize
     useEffect(() => {
         draw();
-    }, [canvasWidth, canvasHeight, elements, gridSize]);
+    }, [canvasWidth, canvasHeight, elements, gridSize, scale]);
 
     return <canvas onMouseUp={handleMouseUp} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} ref={canvasRef} />;
 };

@@ -14,7 +14,7 @@ const EffectCanvas = ({ canvasWidth, canvasHeight }: EffectCanvasProps) => {
     const [hoverPoint, setHoverPoint] = useState<{ x: null | number; y: null | number }>({ x: null, y: null });
     const [currentElement, setCurrentElement] = useState<CanvasElement | null>(null);
     const { addElement, selectedTool } = useCanvasStore(store => store);
-    const gridSize = useOptionsStore(store => store.gridSize);
+    const { gridSize, scale } = useOptionsStore(store => store);
 
     const handleMouseMove = (e: React.MouseEvent) => {
         const snappedCoords = toSnappedCoords(e.clientX, e.clientY, gridSize);
@@ -57,7 +57,7 @@ const EffectCanvas = ({ canvasWidth, canvasHeight }: EffectCanvasProps) => {
                     context.arc(hoverPoint.x, hoverPoint.y, 4, 0, 2 * Math.PI, true);
                     context.fill();
                 }
-                if (currentElement) drawElement(context, currentElement);
+                if (currentElement) drawElement(context, currentElement, gridSize, scale);
             }
         }
     };
