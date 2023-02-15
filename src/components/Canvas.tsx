@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { drawElement } from "../helpers/drawElement";
 import { useCanvasStore } from "../zustand/canvasStore";
-
-const GRID_H = 16;
-const GRID_V = 16;
+import { useOptionsStore } from "../zustand/optionsStore";
 
 type CanvasProps = {
     canvasWidth: number;
@@ -13,18 +11,19 @@ type CanvasProps = {
 const Canvas = ({ canvasWidth, canvasHeight }: CanvasProps) => {
     const canvasRef = useRef<null | HTMLCanvasElement>(null);
     const { elements, addElement } = useCanvasStore(store => store);
+    const gridSize = useOptionsStore(store => store.gridSize);
 
     const drawGrid = (ctx: CanvasRenderingContext2D) => {
-        const h_lines = Math.floor(window.innerWidth / GRID_H);
-        const v_lines = Math.floor(window.innerHeight / GRID_V);
+        const h_lines = Math.floor(window.innerWidth / gridSize);
+        const v_lines = Math.floor(window.innerHeight / gridSize);
         ctx.strokeStyle = "#777";
         for (let x = 0; x < h_lines; x++) {
-            ctx.moveTo(x * GRID_H, 0);
-            ctx.lineTo(x * GRID_H, canvasHeight);
+            ctx.moveTo(x * gridSize, 0);
+            ctx.lineTo(x * gridSize, canvasHeight);
         }
         for (let y = 0; y < v_lines; y++) {
-            ctx.moveTo(0, y * GRID_V);
-            ctx.lineTo(canvasWidth, y * GRID_V);
+            ctx.moveTo(0, y * gridSize);
+            ctx.lineTo(canvasWidth, y * gridSize);
         }
         ctx.stroke();
         // ctx.lineWidth = 1;
@@ -56,7 +55,7 @@ const Canvas = ({ canvasWidth, canvasHeight }: CanvasProps) => {
     // On window resize
     useEffect(() => {
         draw();
-    }, [canvasWidth, canvasHeight, elements]);
+    }, [canvasWidth, canvasHeight, elements, gridSize]);
 
     return <canvas onMouseUp={handleMouseUp} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} ref={canvasRef} />;
 };

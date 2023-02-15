@@ -2,9 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { drawElement } from "../helpers/drawElement";
 import { toSnappedCoords } from "../helpers/snapToGrid";
 import { useCanvasStore } from "../zustand/canvasStore";
-
-const GRID_H = 16;
-const GRID_V = 16;
+import { useOptionsStore } from "../zustand/optionsStore";
 
 type EffectCanvasProps = {
     canvasWidth: number;
@@ -16,9 +14,10 @@ const EffectCanvas = ({ canvasWidth, canvasHeight }: EffectCanvasProps) => {
     const [hoverPoint, setHoverPoint] = useState<{ x: null | number; y: null | number }>({ x: null, y: null });
     const [currentElement, setCurrentElement] = useState<CanvasElement | null>(null);
     const { addElement, selectedTool } = useCanvasStore(store => store);
+    const gridSize = useOptionsStore(store => store.gridSize);
 
     const handleMouseMove = (e: React.MouseEvent) => {
-        const snappedCoords = toSnappedCoords(e.clientX, e.clientY, GRID_H, GRID_V);
+        const snappedCoords = toSnappedCoords(e.clientX, e.clientY, gridSize);
         setHoverPoint(snappedCoords);
         if (currentElement) {
             setCurrentElement({ ...currentElement, endPosition: snappedCoords });
@@ -26,17 +25,19 @@ const EffectCanvas = ({ canvasWidth, canvasHeight }: EffectCanvasProps) => {
     };
 
     const handleMouseDown = (e: React.MouseEvent) => {
-        const snappedCoords = toSnappedCoords(e.clientX, e.clientY, GRID_H, GRID_V);
+        const snappedCoords = toSnappedCoords(e.clientX, e.clientY, gridSize);
 
         setCurrentElement({ type: selectedTool, startPosition: snappedCoords, endPosition: snappedCoords });
     };
 
     const handleMouseUp = (e: React.MouseEvent) => {
-        const snappedCoords = toSnappedCoords(e.clientX, e.clientY, GRID_H, GRID_V);
-        if (currentElement) {
+        const snappedCoords = toSnappedCoords(e.clientX, e.clientY, gridSize);
+        if (currentElement && (currentElement.startPosition.x !== currentElement.endPosition.x || currentElement.startPosition.y !== currentElement.endPosition.y)) {
+            console.log(currentElement);
+
             addElement({ ...currentElement, endPosition: snappedCoords });
-            setCurrentElement(null);
         }
+        setCurrentElement(null);
     };
 
     const handleMouseLeave = () => {

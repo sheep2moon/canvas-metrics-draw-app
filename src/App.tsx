@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import Actionbar from "./components/actionbar/Actionbar";
+import Actionbar from "./components/action-bar/Actionbar";
 import Canvas from "./components/Canvas";
 import EffectCanvas from "./components/EffectCanvas";
+import SettingsBar from "./components/settings-bar/SettingsBar";
 import Toolbar from "./components/toolbar/Toolbar";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <EffectCanvas canvasWidth={canvasSize.width} canvasHeight={canvasSize.height} />
             <Toolbar />
             <Actionbar />
+            <SettingsBar />
         </div>
     );
 }

@@ -30,7 +30,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, direction, delay = 500, chil
                         "top-full translate-y-2": direction === "down",
                         "top-2 -translate-y-full": direction === "top",
                         "-left-2 -translate-x-full top-1/2 -translate-y-1/2": direction === "left",
-                        "right-2 translate-x-full top-1/2 -translate-y-1/2": direction === "right"
+                        "-right-2 translate-x-full top-1/2 -translate-y-1/2": direction === "right"
                     })}
                 >
                     {content}
